@@ -1,5 +1,8 @@
 class GroupsController < ApplicationController
-  before_action :authenticate_user! , only => [:new, :create]
+  def index
+    @groups = Group.all
+  end
+  before_action :authenticate_user!, :only => [:new, :create]
 
  def new
    @group = Group.find(params[:group_id])
@@ -17,6 +20,11 @@ class GroupsController < ApplicationController
    else
       render :new
    end
+  end
+
+  def show
+    @group = Group.find(params[:id])
+    @posts = @group.posts
   end
 
 private
